@@ -109,7 +109,7 @@ class _HomePageState extends State<HomePage>
               );
             } else {
               return Center(
-                child: Text('加载中'),
+                child: Text('加载中...'),
               );
             }
           },
@@ -260,6 +260,7 @@ class TopNavigator extends StatelessWidget {
       height: ScreenUtil().setHeight(250),
       padding: EdgeInsets.all(3.0),
       child: GridView.count(
+        physics: NeverScrollableScrollPhysics(),
         crossAxisCount: 5,
         padding: EdgeInsets.all(5.0),
         children: items.map((item) {

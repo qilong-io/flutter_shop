@@ -1,5 +1,8 @@
 //获得商城首页信息的方法
+import 'dart:io';
+
 import 'package:bxshjdemo1/config/service_url.dart';
+import 'package:dio/adapter.dart';
 import 'package:dio/dio.dart';
 
 
@@ -10,8 +13,17 @@ Future request(url,{formData}) async{
     print('开始获取$url数据...............');
     Response response;
     Dio dio = new Dio();
+
+//    (dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
+//        (HttpClient client) {
+//      client.badCertificateCallback =
+//          (X509Certificate cert, String host, int port) {
+//        return true;
+//      };
+//    };
+
     dio.options.contentType = "application/x-www-form-urlencoded";
-//    dio.options.responseType = ResponseType.plain;
+//    dio.options.responseType = ResponseType.json;
     if (formData == null) {
       response = await dio.post(servicePath[url]);
     } else{
