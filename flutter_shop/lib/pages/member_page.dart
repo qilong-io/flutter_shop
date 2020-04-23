@@ -10,8 +10,9 @@ class MemberPage extends StatelessWidget {
       ),
       body: Center(
         child: Text(
-          '会员中心',
+          '会员中心\n开发中\n敬请期待',
           style: Theme.of(context).textTheme.display1,
+          textAlign: TextAlign.center,
         ),
       ),
     );
