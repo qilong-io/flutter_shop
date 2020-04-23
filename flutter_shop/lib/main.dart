@@ -1,4 +1,4 @@
-import 'package:bxshjdemo1/provide/counter.dart';
+import 'package:bxshjdemo1/provide/cart.dart';
 import 'package:bxshjdemo1/routers/application.dart';
 import 'package:bxshjdemo1/routers/routers.dart';
 import 'package:flutter/material.dart';
@@ -11,14 +11,14 @@ import 'package:fluro/fluro.dart';
 
 
 void main(){
-  var counter = Counter();
   var childCategory = ChildCategory();
   var goodsList = CategoryGoodsListProvide();
   var providers = Providers();
   var detailsProviders = DetailsInfoProvide();
+  var cartProviders = CartProvide();
   providers
-    ..provide(Provider<Counter>.value(counter))
     ..provide(Provider<ChildCategory>.value(childCategory))
+    ..provide(Provider<CartProvide>.value(cartProviders))
     ..provide(Provider<CategoryGoodsListProvide>.value(goodsList))
     ..provide(Provider<DetailsInfoProvide>.value(detailsProviders));
   runApp(ProviderNode(child: MyApp(),providers: providers));

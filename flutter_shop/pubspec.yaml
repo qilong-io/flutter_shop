@@ -41,6 +41,8 @@ dependencies:
   fluro: ^1.6.3
 #  html 网页 显示 插件
   flutter_html: ^0.11.1
+#  数据持久化
+  shared_preferences: ^0.5.7
 
 dev_dependencies:
   flutter_test:
