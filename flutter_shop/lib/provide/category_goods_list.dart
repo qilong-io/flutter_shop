@@ -10,4 +10,11 @@ class CategoryGoodsListProvide with ChangeNotifier{
     goodsList = list;
     notifyListeners();
   }
+
+
+  //点击大类时更换商品列表
+  getMoreList(List<CategoryListData> list){
+    goodsList.addAll(list);
+    notifyListeners();
+  }
 }

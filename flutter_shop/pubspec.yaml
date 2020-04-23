@@ -35,6 +35,12 @@ dependencies:
   flutter_easyrefresh: ^2.1.1
 #  状态管理控件
   provide: ^1.0.2
+#  轻提示toast 插件
+  fluttertoast: ^4.0.0
+#  企业级路由
+  fluro: ^1.6.3
+#  html 网页 显示 插件
+  flutter_html: ^0.11.1
 
 dev_dependencies:
   flutter_test:
