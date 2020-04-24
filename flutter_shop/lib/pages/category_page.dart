@@ -60,22 +60,24 @@ class _LeftCategoryNavState extends State<LeftCategoryNav> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: ScreenUtil().setWidth(180),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        border: Border(
-          right: BorderSide(width: 1, color: Colors.black12),
-        ),
-      ),
-      child: Container(
-        child: ListView.builder(
-          itemCount: list.length,
-          itemBuilder: (context, index) {
-            return _leftInkWell(index);
-          },
-        ),
-      ),
+    return Provide<ChildCategory>(
+      builder: (context, child, val) {
+        _getBigGoodsList(context);
+        listIndex = val.categoryIndex;
+
+        return Container(
+          width: ScreenUtil().setWidth(180),
+          decoration: BoxDecoration(
+              border:
+                  Border(right: BorderSide(width: 1, color: Colors.black12))),
+          child: ListView.builder(
+            itemCount: list.length,
+            itemBuilder: (context, index) {
+              return _leftInkWell(index);
+            },
+          ),
+        );
+      },
     );
   }
 
@@ -89,10 +91,11 @@ class _LeftCategoryNavState extends State<LeftCategoryNav> {
         });
         print('点击了${(list[index] as Data).mallCategoryName}');
         var childList = (list[index] as Data).bxMallSubDto;
-        var ctaegoryId = (list[index] as Data).mallCategoryId;
+        var categoryId = (list[index] as Data).mallCategoryId;
+        Provide.value<ChildCategory>(context).changeCategory(categoryId, index);
         Provide.value<ChildCategory>(context)
-            .getChildCategory(childList, ctaegoryId);
-        _getBigGoodsList(categoryId: ctaegoryId);
+            .getChildCategory(childList, categoryId);
+        _getBigGoodsList(context, categoryId: categoryId);
       },
       child: Container(
         height: ScreenUtil().setHeight(100),
@@ -128,12 +131,12 @@ class _LeftCategoryNavState extends State<LeftCategoryNav> {
       var categoruId = (list[0] as Data).mallCategoryId;
       Provide.value<ChildCategory>(context)
           .getChildCategory(childList, categoruId);
-      _getBigGoodsList(categoryId: categoruId);
+      _getBigGoodsList(context, categoryId: categoruId);
     });
   }
 
   // 获取数据
-  void _getBigGoodsList({String categoryId}) {
+  void _getBigGoodsList(context, {String categoryId}) {
     var data = {
       'categoryId': categoryId == null ? '4' : categoryId,
       'categorySubId': '',
@@ -178,7 +181,7 @@ class _RightCategoryNavState extends State<RightCategoryNav> {
             itemCount: childCategory.childCategoryList.length,
             itemBuilder: (context, index) {
               return _rightInkWell(
-                  childCategory.childCategoryList[index], index);
+                  index, childCategory.childCategoryList[index]);
             },
           ),
         );
@@ -186,33 +189,33 @@ class _RightCategoryNavState extends State<RightCategoryNav> {
     );
   }
 
-  Widget _rightInkWell(BxMallSubDto item, index) {
-    bool isclick = false;
-    isclick = (Provide.value<ChildCategory>(context).chilIndex == index)
+  Widget _rightInkWell(int index, BxMallSubDto item) {
+    bool isCheck = false;
+    isCheck = (index == Provide.value<ChildCategory>(context).childIndex)
         ? true
         : false;
+
     return InkWell(
       onTap: () {
+        print(2222222222);
         Provide.value<ChildCategory>(context)
-            .changeChildIndex(index, item.mallCategoryId);
-        _getGoodsList(item.mallSubId);
+            .changeChildIndex(index, item.mallSubId);
+        _getGoodsList(context, item.mallSubId);
       },
       child: Container(
-        padding: EdgeInsets.fromLTRB(10, 15, 10, 10),
-        color: Colors.white,
+        padding: EdgeInsets.fromLTRB(5.0, 10.0, 5.0, 10.0),
         child: Text(
-          (item as BxMallSubDto).mallSubName,
+          item.mallSubName,
           style: TextStyle(
-            fontSize: ScreenUtil().setSp(32),
-            color: isclick ? Colors.pinkAccent : Colors.black,
-          ),
+              fontSize: ScreenUtil().setSp(28),
+              color: isCheck ? Colors.pink : Colors.black),
         ),
       ),
     );
   }
 
   // 获取数据
-  void _getGoodsList(String categorySubId) {
+  void _getGoodsList(context, String categorySubId) {
     var data = {
       'categoryId': Provide.value<ChildCategory>(context).categoryId,
       'categorySubId': categorySubId,
@@ -249,11 +252,6 @@ class _CategoryGoodsState extends State<CategoryGoods> {
   var scrollController = new ScrollController();
 
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Provide<CategoryGoodsListProvide>(
       builder: (context, child, data) {
@@ -275,7 +273,7 @@ class _CategoryGoodsState extends State<CategoryGoods> {
                 footer: ClassicalFooter(
                   bgColor: Colors.white,
                   textColor: Colors.pink,
-                  noMoreText: Provide.value<ChildCategory>(context).noMoreTest,
+                  noMoreText: Provide.value<ChildCategory>(context).noMoreText,
                   showInfo: true,
                   loadedText: '加载中...',
                   loadReadyText: '上拉加载更多',
@@ -288,8 +286,18 @@ class _CategoryGoodsState extends State<CategoryGoods> {
                   },
                 ),
                 onLoad: () async {
-                  print('上拉加载更多');
-                  _getMoreList();
+                  if (Provide.value<ChildCategory>(context).noMoreText ==
+                      '没有更多了') {
+                    Fluttertoast.showToast(
+                        msg: "已经到底了",
+                        toastLength: Toast.LENGTH_SHORT,
+                        gravity: ToastGravity.CENTER,
+                        backgroundColor: Colors.pink,
+                        textColor: Colors.white,
+                        fontSize: 16.0);
+                  } else {
+                    _getMoreList();
+                  }
                 },
               ),
             ),
@@ -318,14 +326,6 @@ class _CategoryGoodsState extends State<CategoryGoods> {
       var data = json.decode(jsonStr);
       CategoryGoodsListModel goodsList = CategoryGoodsListModel.fromJson(data);
       if (goodsList.data == null) {
-        Fluttertoast.showToast(
-          msg: '已经到底了',
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.CENTER,//提示位置
-          backgroundColor: Colors.pink,
-          textColor: Colors.white,
-          fontSize: 16.0,
-        );
         Provide.value<ChildCategory>(context).changeNoMore('没有更多数据了');
       } else {
         Provide.value<CategoryGoodsListProvide>(context)

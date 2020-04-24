@@ -73,7 +73,10 @@ class Cartitem extends StatelessWidget {
       child: Column(
         children: <Widget>[
           Text(item.goodsName),
-          CartCount(item),
+          Container(
+            margin: EdgeInsets.only(top: 8),
+            child: CartCount(item),
+          ),
         ],
       ),
     );
@@ -88,6 +91,7 @@ class Cartitem extends StatelessWidget {
         children: <Widget>[
           Text('￥${item.price}'),
           Container(
+            margin: EdgeInsets.only(top: 8),
             child: InkWell(
               onTap: () {
                 Provide.value<CartProvide>(context)

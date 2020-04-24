@@ -28,7 +28,7 @@ class DetailsBottom extends StatelessWidget {
               children: <Widget>[
                 InkWell(
                   onTap: () {
-                    Provide.value<CurrentIndexProvide>(context).chagenIndex(2);
+                    Provide.value<CurrentIndexProvide>(context).changeIndex(2);
                     Navigator.pop(context);
                   },
                   child: Container(

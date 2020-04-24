@@ -40,7 +40,7 @@ class IndexPage extends StatelessWidget {
             currentIndex: currentIndex,
             items: bottomTabs,
             onTap: (index) {
-              Provide.value<CurrentIndexProvide>(context).chagenIndex(index);
+              Provide.value<CurrentIndexProvide>(context).changeIndex(index);
             },
           ),
           body: IndexedStack(
