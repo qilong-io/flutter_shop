@@ -1,4 +1,5 @@
 import 'package:bxshjdemo1/provide/cart.dart';
+import 'package:bxshjdemo1/provide/current_index.dart';
 import 'package:bxshjdemo1/routers/application.dart';
 import 'package:bxshjdemo1/routers/routers.dart';
 import 'package:flutter/material.dart';
@@ -16,11 +17,13 @@ void main(){
   var providers = Providers();
   var detailsProviders = DetailsInfoProvide();
   var cartProviders = CartProvide();
+  var currentIndexProvide = CurrentIndexProvide();
   providers
-    ..provide(Provider<ChildCategory>.value(childCategory))
     ..provide(Provider<CartProvide>.value(cartProviders))
+    ..provide(Provider<ChildCategory>.value(childCategory))
     ..provide(Provider<CategoryGoodsListProvide>.value(goodsList))
-    ..provide(Provider<DetailsInfoProvide>.value(detailsProviders));
+    ..provide(Provider<DetailsInfoProvide>.value(detailsProviders))
+    ..provide(Provider<CurrentIndexProvide>.value(currentIndexProvide));
   runApp(ProviderNode(child: MyApp(),providers: providers));
 }
 
