@@ -79,7 +79,7 @@ class MemberPage extends StatelessWidget {
     return Container(
       margin: EdgeInsets.only(top: 5),
       width: ScreenUtil().setWidth(750),
-      height: ScreenUtil().setHeight(150),
+      height: ScreenUtil().setHeight(170),
       padding: EdgeInsets.only(top: 20),
       color: Colors.white,
       child: Row(
