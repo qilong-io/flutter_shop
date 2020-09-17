@@ -1,0 +1,28 @@
+PODS:
+  - Flutter (1.0.0)
+  - FlutterPluginRegistrant (0.0.1):
+    - Flutter
+  - qiangge (0.0.1):
+    - Flutter
+
+DEPENDENCIES:
+  - Flutter (from `../qiangge/.ios/Flutter/engine`)
+  - FlutterPluginRegistrant (from `../qiangge/.ios/Flutter/FlutterPluginRegistrant`)
+  - qiangge (from `../qiangge/.ios/Flutter`)
+
+EXTERNAL SOURCES:
+  Flutter:
+    :path: "../qiangge/.ios/Flutter/engine"
+  FlutterPluginRegistrant:
+    :path: "../qiangge/.ios/Flutter/FlutterPluginRegistrant"
+  qiangge:
+    :path: "../qiangge/.ios/Flutter"
+
+SPEC CHECKSUMS:
+  Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
+  FlutterPluginRegistrant: d59dd07dd90e9c6430996073575a5bd1ea19677e
+  qiangge: a560c14b14bcbe2e122c532d59439b1345cb481b
+
+PODFILE CHECKSUM: 82244ae36fa3cd139ce8da089725034002d5e317
+
+COCOAPODS: 1.9.1

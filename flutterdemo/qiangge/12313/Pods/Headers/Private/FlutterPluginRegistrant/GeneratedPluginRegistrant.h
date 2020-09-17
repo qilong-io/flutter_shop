@@ -1,0 +1,1 @@
+../../../../../qiangge/.ios/Flutter/FlutterPluginRegistrant/Classes/GeneratedPluginRegistrant.h
